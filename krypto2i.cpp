@@ -2,12 +2,19 @@
 #include "klucz.h"
 #include "tekst.h"
 
-
+void permutacja(int iloscObliczen,int permutacja[10],bool wejscie[10],bool wyjscie[10]){
+  for(int i=0;iloscObliczen>i;i++)
+    wyjscie[i]=wejscie[permutacja[i]];
+}
+void laczenie(int iloscObliczen,bool cz1[5],bool cz2[5],bool wyjscie[10]){
+  for(int i=0;iloscObliczen>i;i++){
+    wyjscie[i]=cz1[i];
+    wyjscie[i+iloscObliczen]=cz2[i];
+  }
+}
 using namespace std;
 int main(){
-  bool sbox1[16][2]={{0,1},{1,1},{0,0},{1,0},{1,1},{0,1},{1,0},{0,0},{0,0},{1,1},{0,1},{0,1},{0,1},{1,1},{1,1},{1,0}};
-  bool sbox2[16][2]={{0,0},{1,0},{0,1},{0,0},{1,0},{0,1},{1,1},{1,1},{1,1},{1,0},{0,0},{0,1},{0,1},{0,0},{0,0},{1,1}};
-
+  bool poSBoxach[4]={0};
 
   //zmienne do tekstu
   bool t[8]={1,0,1,1,1,0,0,0};
@@ -18,7 +25,12 @@ int main(){
   bool pop4w8[8]={0};
   int p4w8[8]={3,0,1,2,1,2,3,0};
   bool poDodawaniu[8]={0};
-
+  bool doSbox1[4]={0};
+  bool doSbox2[4]={0};
+  bool poP4[4]={0};
+  bool poDodawaniu2[4]={0};
+  bool poLaczeniu[8]={0};
+  bool poPW[8]={0};
   //zmienne do klucza
   bool kp[10]={1,1,0,0,0,0,0,0,1,1};
   int P10[10]={2,4,1,6,3,9,0,8,7,5};
@@ -34,6 +46,8 @@ int main(){
   int Przez2[5]={2,3,4,0,1};
   bool k12k22[10]={0};
   bool poP10w82[8]={0};
+  int p4[4]={1,3,2,0};
+  int PW[8]={1,5,2,0,3,7,4,6};
 
 
   //klucz
@@ -69,7 +83,6 @@ int main(){
     cout<<poP10w82[i];
   }
   cout<<endl<<endl<<endl<<"Tekst"<<endl;
-
   //tekst
   cout<<"Kopia 1 P4w8:   \t";
   podzielTekst(t,t1,t2);
@@ -79,10 +92,51 @@ int main(){
     cout<<pop4w8[i];
   cout<<endl;
   cout<<"Dodawanie Symetryczne:\t";
-  dodawanieSymetryczne(poP10w8,pop4w8,poDodawaniu);
+  dodawanieSymetryczne(8,poP10w8,pop4w8,poDodawaniu);
   for(int i=0;8>i;i++)
     cout<<poDodawaniu[i];
   cout<<endl;
-
+  cout<<"Podziel tekst:     \t"<<endl;
+  podzielTekst(poDodawaniu,doSbox1,doSbox2);
+  cout<<"DoSbox1:           \t";
+  for(int i=0;4>i;i++)
+    cout<<doSbox1[i];
+  cout<<endl;
+    cout<<"DoSbox2:           \t";
+  for(int i=0;4>i;i++)
+    cout<<doSbox2[i];
+  cout<<endl<<"SBoxy na dziesietny  \t"<<endl;
+  cout<<"SBox nr 1:           \t";
+  cout<<naDziesietny(doSbox1);
+  cout<<endl;
+  cout<<"Sbox Nr2:            \t";
+  cout<<naDziesietny(doSbox2);
+  cout<<endl;
+  ///sboxy
+  cout<<"Sboxy Polaczone:     \t";
+  SboxyILaczenie(naDziesietny(doSbox1),naDziesietny(doSbox2),poSBoxach);
+  for(int i=0;4>i;i++)
+    cout<<poSBoxach[i];
+  cout<<endl;
+  cout<<"Sboxy po permutacji:  \t";
+  permutacja(4,p4,poSBoxach,poP4);
+  for(int i=0;4>i;i++)
+    cout<<poP4[i];
+  cout<<endl;
+  cout<<"Dodanie symetryczne p4\t";
+  dodawanieSymetryczne(4,t1,poP4,poDodawaniu2);
+  for(int i=0;4>i;i++)
+    cout<<poDodawaniu2[i];
+  cout<<endl;
+  cout<<"Laczenie polowek(g)    \t";
+  laczenie(4,poDodawaniu2,t2,poLaczeniu);
+  for(int i=0;8>i;i++)
+    cout<<poLaczeniu[i];
+  cout<<endl;
+  cout<<"Wiadomosc permutacja PW\t";
+  permutacja(8,PW,t,poPW);
+  for(int i=0;8>i;i++)
+    cout<<poPW[i];
+  cout<<endl;
 return 0;
 }
