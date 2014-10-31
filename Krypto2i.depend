@@ -1,13 +1,13 @@
 # depslib dependency file v1.0
-1414670465 source:c:\users\the wiking\documents\github\krypto2\krypto2i.cpp
+1414751862 source:c:\users\the wiking\documents\github\krypto2\krypto2i.cpp
 	<iostream>
 	"klucz.h"
 	"tekst.h"
 
-1414669502 c:\users\the wiking\documents\github\krypto2\klucz.h
+1414746482 c:\users\the wiking\documents\github\krypto2\klucz.h
 	<iostream>
 
-1414670847 c:\users\the wiking\documents\github\krypto2\tekst.h
+1414750373 c:\users\the wiking\documents\github\krypto2\tekst.h
 	<iostream>
 	<cmath>
 
